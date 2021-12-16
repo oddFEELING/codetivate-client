@@ -1,3 +1,5 @@
+@use './theme.module.scss' as *;
+
 html,
 body {
   padding: 0;
@@ -13,4 +15,16 @@ a {
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  border: none;
+  font-family: $font_1;
+  transition: 300ms all ease-in-out;
+}
+
+.logo__container {
+  position: absolute;
+  top: 4vh;
+  left: 2vw;
+  width: 130px;
+  pointer-events: none;
 }

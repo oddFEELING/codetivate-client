@@ -1,0 +1,100 @@
+//--------------------------------------->
+//-->  ## GLOBAL THEME FILE
+//--------------------------------------->
+
+//--------------------------------------->
+//-->  ## DIVS
+//--------------------------------------->
+
+@mixin div($height, $width, $dir, $color) {
+  height: $height;
+  width: $width;
+  display: flex;
+  flex-direction: $dir;
+  background-color: $color;
+}
+
+// full screen
+@mixin full-div($dir, $color) {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: $dir;
+  background-color: $color;
+
+  // full parent
+}
+@mixin inh-div($dir, $color) {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: $dir;
+  background-color: $color;
+}
+
+//--------------------------------------->
+//-->  ## FONTS
+//--------------------------------------->
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+$font_1: 'Montserrat', sans-serif;
+$font_2: 'Lora', serif;
+
+//--------------------------------------->
+//-->  ## COLORS
+//--------------------------------------->
+
+$colors: (
+  'pr': #0f222d,
+  'sc': #ba3521,
+  'lt': #ffffff,
+);
+
+@function clr($color) {
+  @return map-get($colors, $color);
+}
+
+//-------------------------------------------->
+//--> media queries
+//-------------------------------------------->
+
+// set media queries as values into strings
+$breakPoints: (
+  'mobile': screen and
+    (
+      max-width: 499px,
+    ),
+  'tablet': screen and
+    (
+      min-width: 500px,
+    ),
+  'medium-max': screen and
+    (
+      max-width: 800px,
+    ),
+  'medium': screen and
+    (
+      min-width: 1024px,
+    ),
+  'desktop': screen and
+    (
+      min-width: 1300px,
+    ),
+) !default;
+
+// create mixin to respond to breakpoints
+@mixin media($breakPoint) {
+  // map through the breakpoints list to check if value exists
+  @if map-has-key($breakPoints, $breakPoint) {
+    // mget the breakpoint fron the list
+    @media #{inspect(map-get($breakPoints, $breakPoint ) )} {
+      @content;
+    }
+  }
+
+  //else value
+  @else {
+    @warn 'Unfortunately there is no break point set for this value' + 'available break points are: #{map-keys($breakPoints)}.';
+  }
+}
