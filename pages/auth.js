@@ -132,7 +132,7 @@ const Auth = () => {
             Login
           </button>
           <h3>
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <b onClick={() => setLogin(false)}>Sign up</b>
           </h3>
         </form>
