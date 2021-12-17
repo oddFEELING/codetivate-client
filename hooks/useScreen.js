@@ -17,7 +17,7 @@ const useScreen = () => {
       window.removeEventListener('load', setScreen);
       window.removeEventListener('resize', setScreen);
     };
-  }, [Mobile]);
+  });
 
   return Mobile;
 };

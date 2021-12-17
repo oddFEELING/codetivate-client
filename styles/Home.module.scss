@@ -1,139 +1,17 @@
 @use './theme.module.scss' as *;
 
-.main {
-  @include full-div(column, clr('lt'));
-  position: relative;
-  overflow: hidden;
-  align-items: flex-start;
+.container {
+  @include div(100vh, 100%, column, clr('lt'));
+  align-items: center;
   justify-content: center;
+  min-height: 600px;
+  min-width: 1000px;
 }
 
-//-->  content area
-.content__section {
-  @include div(100vh, 40vw, column, transparent);
-  color: clr('pr');
-  margin-left: 10vw;
-  gap: 18vh;
-  z-index: 1;
-  justify-content: center;
-  align-items: flex-start;
-
-  @include media('mobile') {
-    width: 100%;
-    text-align: center;
-    align-items: center;
-    margin: 0;
-  }
+.main__content {
+  @include div(90%, 100%, row, none);
 }
 
-.title {
-  font-weight: 900;
-  margin-top: -9vh;
-  letter-spacing: 0.3vw;
-  font-size: clamp(3rem, 5.5vw, 15rem);
-}
-
-.tag__message {
-  font-size: clamp(1rem, 1.5vw, 3rem);
-  font-weight: 600;
-  margin-top: -18vh;
-  font-family: $font_2;
-  font-style: italic;
-}
-.sub__text {
-  font-size: clamp(1.3rem, 1.5vw, 3rem);
-  font-weight: 400;
-  font-family: $font_2;
-  font-style: italic;
-}
-
-//-->  image area
-.abs__img_container {
-  @include div(80vh, 80%, row, transparent);
-  position: absolute;
-  right: -10vw;
-  bottom: -15vh;
-  z-index: 0;
-
-  @include media('mobile') {
-    display: none;
-  }
-}
-
-.rel__img_container {
-  @include inh-div(row, transparent);
-  position: relative;
-}
-
-.main__img {
-  object-position: center;
-  object-fit: cover;
-}
-
-//-->  Call to actions
-.main__cta {
-  height: 7vh;
-  width: 20vw;
-  min-width: 200px;
-  cursor: pointer;
-  margin-top: -15vh;
-  border-radius: 0.5vw;
-  background-color: clr('pr');
-  color: clr('lt');
-  font-size: clamp(1rem, 1vw, 3rem);
-  box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.3);
-
-  @include media('mobile') {
-    width: 70vw;
-  }
-
-  &:hover {
-    background-color: rgba(clr('sc'), 0.9);
-    transform: scale(1.05);
-  }
-}
-//--------------------------------------->  icons part
-.icons__div {
-  @include div(5vh, 35vw, row, none);
-  position: absolute;
-  justify-content: center;
-  right: 2vw;
-  gap: 3vh;
-  top: 3vh;
-  min-width: 300px;
-
-  @include media('mobile') {
-    width: 100%;
-    height: 3vh;
-    padding: 0 10vw;
-  }
-}
-
-.rel__icon_div {
-  @include div(100%, 10%, column, none);
-  position: relative;
-  cursor: pointer;
-
-  &:hover {
-    transform: scale(1.15);
-  }
-}
-
-.icons__side {
-  object-position: center;
-  object-fit: contain;
-}
-
-.logo__container {
-  position: absolute;
-  top: 4vh;
-  left: 2vw;
-  z-index: 2;
-  width: 130px;
-  height: 4vh;
-
-  @include media('mobile') {
-    top: 95vh;
-    left: 30vw;
-  }
+.side__bar {
+  @include div(100%, 20%, column, orange);
 }
