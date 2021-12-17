@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { useSelector } from 'react-redux';
 import TopBar from '../components/top_bar/TopBar';
-import styles from '../styles/home.module.scss';
+import styles from '../styles/main.module.scss';
 import HelpBar from '../components/help_bar/HelpBar';
 import Console from '../components/center_console/Console';
 

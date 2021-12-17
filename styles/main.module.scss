@@ -1,0 +1,17 @@
+@use './theme.module.scss' as *;
+
+.container {
+  @include div(100vh, 100%, column, clr('lt'));
+  align-items: center;
+  justify-content: center;
+  min-height: 600px;
+  min-width: 1000px;
+}
+
+.main__content {
+  @include div(90%, 100%, row, none);
+}
+
+.side__bar {
+  @include div(100%, 20%, column, orange);
+}

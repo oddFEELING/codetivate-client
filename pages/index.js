@@ -12,7 +12,7 @@ import AppleImg from '../assets/icons/apple.svg';
 import FaceImg from '../assets/icons/facebook.svg';
 import TeslaImg from '../assets/icons/tesla.svg';
 import MainImage from '../assets/images/main_image.svg';
-import styles from '../styles/index.module.scss';
+import styles from '../styles/Home.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../features/user';
 
