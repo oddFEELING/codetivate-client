@@ -1,0 +1,8 @@
+@use '../../styles/theme.module.scss' as *;
+
+.container {
+  @include div(60%, 100%, column, rgb(172, 103, 103));
+  position: relative;
+  align-items: center;
+  padding: 5% 5%;
+}

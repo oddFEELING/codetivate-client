@@ -15,8 +15,9 @@
 }
 
 .form__div {
-  @include div(70vh, 40vw, column, none);
+  @include div(70%, 40vw, column, none);
   align-items: center;
+  min-height: 500px;
   justify-content: center;
   padding: 5vh 3vw;
   gap: 01.5vh;

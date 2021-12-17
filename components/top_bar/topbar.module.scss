@@ -1,0 +1,49 @@
+@use '../../styles/theme.module.scss' as *;
+
+.container {
+  @include div(10%, 100%, row, clr('pr'));
+  color: clr('lt');
+  font-family: $font_1;
+  align-items: center;
+  min-height: 60px;
+}
+
+.profile__section {
+  @include div(90%, 10%, column, none);
+  align-items: center;
+  gap: 3%;
+  border-right: 0.5px solid clr('lt');
+  justify-content: center;
+  color: rgba(clr('lt'), 0.8);
+  font-size: clamp(0.5rem, 0.8vw, 2rem);
+
+  b {
+    letter-spacing: 1px;
+    color: clr('lt');
+  }
+}
+
+.profile__icon {
+  @include div(50%, 70%, row, none);
+  position: relative;
+}
+
+.icon__section {
+  @include div(80%, 5%, column, none);
+  position: relative;
+  align-items: center;
+  margin-left: 2vw;
+  gap: 10%;
+  cursor: pointer;
+  font-size: clamp(0.5rem, 0.7vw, 2rem);
+  justify-content: center;
+
+  &:hover > .icon__icon {
+    transform: scale(1.15);
+  }
+}
+
+.icon__icon {
+  @include div(40%, 60%, row, none);
+  position: relative;
+}
