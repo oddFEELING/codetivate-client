@@ -18,9 +18,7 @@ import { login } from '../features/user';
 
 export default function Home() {
   // pick user state from redux
-  const User = useSelector((state) => {
-    state.User;
-  });
+  const User = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
 
   //--------------------------------------->
@@ -42,8 +40,9 @@ export default function Home() {
             })
             .then((res) => {
               setLoggedIn(true);
-              console.log(res.data.message);
-              dispatch(login(res.data));
+              console.log(res.data);
+              dispatch(login({ ...res.data.data }));
+              console.log(User);
             });
         } catch (err) {
           throw err;
@@ -99,7 +98,7 @@ export default function Home() {
           {/* ----- call to action ----- */}
           <Link href={LoggedIn ? '/home' : '/auth'}>
             <button className={styles.main__cta}>
-              {LoggedIn ? 'Welcome back!' : 'Get started'}
+              {LoggedIn ? `Welcome ${User.firstname} ` : 'Get started'}
             </button>
           </Link>
         </section>

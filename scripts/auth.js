@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Router from 'next/router';
 
 //--------------------------------------->
 //-->  ## LOGIN SCRIPT
@@ -9,17 +10,18 @@ export async function loginScript(fieldData) {
       ...fieldData,
     })
     .then((res) => {
-      console.log(res.data);
-
       if (res.data.token !== null) {
         localStorage.setItem('UserToken', res.data.token);
+        alert('login success');
+        Router.replace('/home');
       }
 
       if (res.data.status === 'bad') {
         alert('failed to login, check credentials');
       }
-      return CurrentUser;
+      return res.data;
     });
+  return CurrentUser;
 }
 
 //--------------------------------------->
@@ -27,20 +29,21 @@ export async function loginScript(fieldData) {
 //--------------------------------------->
 
 export async function signupScript(fieldData) {
-  const newUser = await axios
+  const NewUser = await axios
     .post('https://codetivate-backend.herokuapp.com/_api/user/signup', {
       ...fieldData,
     })
     .then((res) => {
-      console.log(res.data);
-
       if (res.data.token !== null) {
         localStorage.setItem('UserToken', res.data.token);
+        alert('User Created!');
+        Router.replace('/home');
       }
 
       if (res.data.status === 'bad') {
         alert('Failed to create profile');
       }
-      return newUser;
+      return res.data;
     });
+  return NewUser;
 }

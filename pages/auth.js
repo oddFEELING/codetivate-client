@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import Head from 'next/head';
-import Router from 'next/router';
 import axios from 'axios';
 import LogoImg from '../assets/icons/logo.svg';
 import Script from 'next/script';
@@ -57,7 +56,8 @@ const Auth = () => {
     //   if its login
     if (Login) {
       try {
-        await loginScript(fieldInfo);
+        const UserData = await loginScript(fieldInfo);
+        dispatch(login(UserData.data));
       } catch (err) {
         throw err;
       }
@@ -65,7 +65,8 @@ const Auth = () => {
     //   if its sign up
     else {
       try {
-        await signupScript(fieldInfo);
+        const UserData = await signupScript(fieldInfo);
+        dispatch(login(UserData.data));
       } catch (err) {
         throw err;
       }
