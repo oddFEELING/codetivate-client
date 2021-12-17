@@ -12,6 +12,7 @@ import styles from '../styles/auth.module.scss';
 import { loginScript, signupScript } from '../scripts/auth';
 
 const Auth = () => {
+  const dispatch = useDispatch();
   const screen = useScreen();
   const formRef = useRef();
   // user states
