@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 
 const useScreen = () => {
   const [Mobile, seTMobile] = useState(false);
-  useEffect(() => {
+  useLayoutEffect(() => {
     function setScreen() {
       if (window.innerWidth < 800) {
         seTMobile(true);
