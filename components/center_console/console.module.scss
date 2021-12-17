@@ -8,3 +8,71 @@
   gap: 2vh;
   overflow-y: scroll;
 }
+
+.add__form {
+  @include div(80%, 80%, column, clr('lt'));
+  position: absolute;
+  z-index: 10;
+  gap: 2.5vh;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 5px 10px 20px rgba(clr('pr'), 0.3);
+
+  h1 {
+    font-size: clamp(1rem, 2vw, 10rem);
+  }
+
+  p {
+    font-weight: 400;
+    position: absolute;
+    left: 2vw;
+    top: 3vh;
+    font-family: $font_2;
+    cursor: pointer;
+    font-size: clamp(1rem, 1.1vw, 5rem);
+
+    &:hover {
+      transform: scale(1.1);
+      font-weight: 600;
+      color: clr('sc');
+    }
+  }
+
+  &[add='false'] {
+    opacity: 0;
+    z-index: -1;
+    transform: translateX(-300px);
+    pointer-events: none;
+  }
+}
+
+.form__input {
+  width: 70%;
+  height: 8%;
+  padding: 2% 2vw;
+  font-family: $font_2;
+  border-radius: 8px;
+  outline-color: rgba(clr('sc'), 0.8);
+  font-size: clamp(1rem, 1.1vw, 5rem);
+  background-color: rgba(clr('pr'), 0.1);
+
+  &:focus {
+    box-shadow: 3px 6px 12px rgba(clr('pr'), 0.3);
+  }
+}
+
+.form__btn {
+  width: 70%;
+  height: 10%;
+  background-color: clr('pr');
+  color: clr('lt');
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: clamp(1rem, 1.1vw, 5rem);
+
+  &:hover {
+    transform: scale(1.03);
+    background-color: clr('sc');
+  }
+}

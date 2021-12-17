@@ -1,8 +1,9 @@
 @use '../../styles/theme.module.scss' as *;
 
 .container {
-  @include div(60%, 100%, column, rgb(172, 103, 103));
+  @include div(60%, 100%, column, clr('sc'));
   position: relative;
   align-items: center;
   padding: 5% 5%;
+  box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.35);
 }
