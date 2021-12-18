@@ -2,15 +2,18 @@ import React, { useEffect, useState, useRef } from 'react';
 import Card from '../inv_card_item/Card';
 import styles from './console.module.scss';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const Console = () => {
+  const User = useSelector((state) => state.user.value);
   const formRef = useRef();
   const [Add, setAdd] = useState('false');
+  const [UserInvestment, setUserInvestment] = useState([]);
   const [InvestData, setInvestData] = useState({
-    type: '',
+    investment_type: '',
     ticker_name: '',
-    amount: 0,
     quantity: 0,
+    invested_amount: 0,
   });
 
   const LottieStyle = {
@@ -27,7 +30,18 @@ const Console = () => {
   useEffect(() => {
     (async function () {
       try {
-        await axios.get();
+        await axios
+          .post(
+            'https://codetivate-backend.herokuapp.com/_api/user/get_investment',
+            { id: User.id }
+          )
+          .then((res) => {
+            console.log(res);
+            setUserInvestment(res.data);
+          })
+          .catch((err) => {
+            console.log(`Errorgetting data --> ${err}`);
+          })();
       } catch (err) {
         throw err;
       }
@@ -48,9 +62,23 @@ const Console = () => {
   };
 
   //-->  addv investment
-  const handleInvestment = (event) => {
+  const handleInvestment = async (event) => {
     event.preventDefault();
-    setAdd('false');
+    await axios
+      .post(
+        'https://codetivate-backend.herokuapp.com/_api/user/add_investment',
+        {
+          id: User.id,
+          data: { ...InvestData },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        setUserInvestment(res.data);
+      })
+      .catch((err) => {
+        console.log(`Error adding data ---> ${err}`);
+      });
   };
   return (
     <section className={styles.container}>
@@ -88,6 +116,7 @@ const Console = () => {
         {/* ----- investment type ----- */}
         <input
           type='text'
+          onChange={setData('investment_type')}
           placeholder='Investment type'
           className={styles.form__input}
         />
@@ -96,12 +125,14 @@ const Console = () => {
         <input
           type='text'
           placeholder='Ticker name'
+          onChange={setData('ticker_name')}
           className={styles.form__input}
         />
 
         {/* ----- Quantity ----- */}
         <input
           type='number'
+          onChange={setData('quantity')}
           placeholder='Quantity of investment'
           className={styles.form__input}
         />
@@ -109,6 +140,7 @@ const Console = () => {
         {/* ----- Invested amount ----- */}
         <input
           type='number'
+          onChange={setData('invested_amount')}
           placeholder='Amount invested'
           className={styles.form__input}
         />
