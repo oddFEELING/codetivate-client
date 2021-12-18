@@ -36,16 +36,16 @@ const Console = () => {
             { id: User.id }
           )
           .then((res) => {
-            console.log(res);
-            setUserInvestment(res.data);
+            console.log(res.data.data);
+            setUserInvestment(res.data.data);
           })
           .catch((err) => {
             console.log(`Errorgetting data --> ${err}`);
-          })();
+          });
       } catch (err) {
         throw err;
       }
-    });
+    })();
   }, []);
 
   //-->  set data
@@ -64,21 +64,28 @@ const Console = () => {
   //-->  addv investment
   const handleInvestment = async (event) => {
     event.preventDefault();
-    await axios
-      .post(
-        'https://codetivate-backend.herokuapp.com/_api/user/add_investment',
-        {
-          id: User.id,
-          data: { ...InvestData },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        setUserInvestment(res.data);
-      })
-      .catch((err) => {
-        console.log(`Error adding data ---> ${err}`);
-      });
+    try {
+      await axios
+        .post(
+          'https://codetivate-backend.herokuapp.com/_api/user/add_investment',
+          {
+            id: User.id,
+            data: { ...InvestData },
+          }
+        )
+        .then((res) => {
+          console.log(res.data.data.investments);
+          setUserInvestment(res.data.data.investments);
+        })
+        .catch((err) => {
+          console.log(`Error adding data ---> ${err}`);
+        });
+      setAdd('false');
+      formRef.current.reset();
+    } catch (err) {
+      console.log(`Error adding inv: Error msg--> ${err}`);
+      alert(`Error adding Investment. Check console for details`);
+    }
   };
   return (
     <section className={styles.container}>
@@ -91,24 +98,22 @@ const Console = () => {
         loop
         hover
       ></lottie-player>
-      <Card
-        quantity='4'
-        investment_type='Stocks'
-        ticker_name='TSLA'
-        invested_amount='1000'
-      />
-      <Card
-        quantity='250'
-        investment_type='Forex'
-        ticker_name='TSLA'
-        invested_amount='20000'
-      />
-      <Card
-        quantity='422'
-        investment_type='Crpto'
-        ticker_name='TSLA'
-        invested_amount='1000'
-      />
+
+      {UserInvestment.length > 1 ? (
+        UserInvestment.map((data, index) => {
+          return (
+            <Card
+              key={index}
+              quantity={data.quantity}
+              investment_type={data.investment_type}
+              ticker_name={data.ticker_name}
+              invested_amount={data.invested_amount}
+            />
+          );
+        })
+      ) : (
+        <h1>No Data</h1>
+      )}
       {/* ----- Add invetment card ----- */}
       <form className={styles.add__form} ref={formRef} add={Add}>
         <p onClick={() => setAdd('false')}>X Close</p>

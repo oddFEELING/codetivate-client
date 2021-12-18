@@ -26,7 +26,7 @@ const Card = (props) => {
       {/* ----- amount ----- */}
       <span className={styles.item__section} style={{ borderRight: 'none' }}>
         <h1>Inv Amount</h1>
-        <p>{invested_amount}</p>
+        <p>${invested_amount}</p>
       </span>
     </section>
   );
