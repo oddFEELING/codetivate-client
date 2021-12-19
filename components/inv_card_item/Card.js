@@ -13,7 +13,7 @@ const Card = (props) => {
         // get crypto price
         await axios
           .get(
-            `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${ticker_name}&to_currency=USD&apikey=D2CBT4GVGUAP51HW`
+            `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${ticker_name}&to_currency=USD&apikey=${process.env.ALPHA_VANTAGE}`
           )
           .then((res) => {
             const rawData = res.data['Realtime Currency Exchange Rate'];
@@ -24,7 +24,7 @@ const Card = (props) => {
       else if (investment_type == 'stocks') {
         await axios
           .get(
-            `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${ticker_name}&apikey=D2CBT4GVGUAP51HW`
+            `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${ticker_name}&apikey=${process.env.ALPHA_VANTAGE}`
           )
           .then((res) => {
             const Data = res.data['Time Series (Daily)'];
@@ -36,7 +36,7 @@ const Card = (props) => {
       else if (investment_type == 'forex') {
         await axios
           .get(
-            `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${ticker_name}&to_symbol=USD&apikey=D2CBT4GVGUAP51HW`
+            `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${ticker_name}&to_symbol=USD&apikey=${process.env.ALPHA_VANTAGE}`
           )
           .then((res) => {
             const Data = res.data['Time Series FX (Daily)'];
