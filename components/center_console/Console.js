@@ -126,6 +126,7 @@ const Console = () => {
           return (
             <Card
               key={index}
+              pos={index}
               quantity={data.quantity}
               investment_type={data.investment_type}
               ticker_name={data.ticker_name}

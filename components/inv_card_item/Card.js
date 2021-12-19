@@ -3,8 +3,17 @@ import axios from 'axios';
 import styles from './card.module.scss';
 
 const Card = (props) => {
+  const [ExpReturn, setExpReturn] = useState(0);
   const [CurrentAmount, setCurrentAmount] = useState(0);
-  const { investment_type, ticker_name, quantity, invested_amount } = props;
+  const { investment_type, ticker_name, quantity, invested_amount, pos } =
+    props;
+
+  //--> effect to update expected return
+  useEffect(() => {
+    CurrentAmount !== 0
+      ? setExpReturn(CurrentAmount * quantity)
+      : setExpReturn(0);
+  }, [CurrentAmount]);
 
   //-->  get live price
   const handlePrice = async () => {
@@ -83,8 +92,16 @@ const Card = (props) => {
 
       {/* ----- price ----- */}
       <span className={styles.item__section} style={{ borderRight: 'none' }}>
-        <h1>Current Amt</h1>
-        <p>300</p>
+        <h1>Exp Return</h1>
+        <p
+          className={
+            ExpReturn > invested_amount
+              ? `${styles.good__return}`
+              : `${styles.bad__return}`
+          }
+        >
+          <b>$ {Number(ExpReturn).toFixed(2)}</b>
+        </p>
       </span>
 
       <span className={styles.btn__area}>
