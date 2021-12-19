@@ -16,18 +16,59 @@
 }
 
 .item__section {
-  @include div(70%, 25%, column, none);
+  @include div(70%, 15%, column, none);
   justify-content: center;
   padding-left: 1%;
   gap: 10%;
   border-right: thin solid black;
 
   h1 {
-    font-size: clamp(1rem, 1.3vw, 5rem);
+    font-size: clamp(1rem, 1.1vw, 5rem);
   }
 
   p {
-    font-size: clamp(0.8rem, 1vw, 5rem);
+    font-size: clamp(0.8rem, 0.85vw, 5rem);
     font-family: $font_2;
+    letter-spacing: 0.5px;
+
+    &.good__return {
+      color: clr('gd');
+    }
+
+    &.bad__return {
+      color: clr('sc');
+    }
   }
+}
+
+.btn__area {
+  @include div(90%, 10%, column, none);
+  gap: 6%;
+  align-items: center;
+  justify-content: center;
+}
+
+.card__btn {
+  width: 80%;
+  height: 30%;
+  font-family: $font_2;
+  cursor: pointer;
+  border-radius: 8px;
+  color: clr('lt_2');
+  font-size: clamp(0.3rem, 0.7vw, 5rem);
+  background-color: clr('pr');
+
+  &:hover {
+    box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  &[delete='true'] {
+    background-color: rgba(clr('sc'), 0.9);
+  }
+}
+
+.current__div {
+  @include div(auto, 90%, row, none);
+  gap: 10%;
+  justify-content: space-between;
 }

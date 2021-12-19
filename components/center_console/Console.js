@@ -64,27 +64,48 @@ const Console = () => {
   //-->  addv investment
   const handleInvestment = async (event) => {
     event.preventDefault();
-    try {
-      await axios
-        .post(
-          'https://codetivate-backend.herokuapp.com/_api/user/add_investment',
-          {
-            id: User.id,
-            data: { ...InvestData },
-          }
-        )
-        .then((res) => {
-          console.log(res.data.data.investments);
-          setUserInvestment(res.data.data.investments);
-        })
-        .catch((err) => {
-          console.log(`Error adding data ---> ${err}`);
+
+    // check for empty field
+    if (
+      InvestData.investment_type !== '' &&
+      InvestData.invested_amount !== 0 &&
+      InvestData.ticker_name !== '' &&
+      InvestData.quantity !== 0
+    ) {
+      try {
+        await axios
+          .post(
+            'https://codetivate-backend.herokuapp.com/_api/user/add_investment',
+            {
+              id: User.id,
+              data: { ...InvestData },
+            }
+          )
+          .then((res) => {
+            console.log(res.data.data.investments);
+            setUserInvestment(res.data.data.investments);
+          })
+          .catch((err) => {
+            console.log(`Error adding data ---> ${err}`);
+          });
+
+        // close the overlay
+        setAdd('false');
+
+        // reset the object
+        setInvestData({
+          investment_type: '',
+          ticker_name: '',
+          quantity: 0,
+          invested_amount: 0,
         });
-      setAdd('false');
-      formRef.current.reset();
-    } catch (err) {
-      console.log(`Error adding inv: Error msg--> ${err}`);
-      alert(`Error adding Investment. Check console for details`);
+        formRef.current.reset();
+      } catch (err) {
+        console.log(`Error adding inv: Error msg--> ${err}`);
+        alert(`Error adding Investment. Check console for details`);
+      }
+    } else {
+      alert('Please fill all fields');
     }
   };
   return (
@@ -99,11 +120,13 @@ const Console = () => {
         hover
       ></lottie-player>
 
-      {UserInvestment.length > 1 ? (
+      <button>Update List</button>
+      {UserInvestment.length > 0 ? (
         UserInvestment.map((data, index) => {
           return (
             <Card
               key={index}
+              pos={index}
               quantity={data.quantity}
               investment_type={data.investment_type}
               ticker_name={data.ticker_name}
@@ -121,6 +144,7 @@ const Console = () => {
         {/* ----- investment type ----- */}
         <input
           type='text'
+          required
           onChange={setData('investment_type')}
           placeholder='Investment type'
           className={styles.form__input}
@@ -129,6 +153,7 @@ const Console = () => {
         {/* ----- ticker name ----- */}
         <input
           type='text'
+          required
           placeholder='Ticker name'
           onChange={setData('ticker_name')}
           className={styles.form__input}
@@ -137,6 +162,7 @@ const Console = () => {
         {/* ----- Quantity ----- */}
         <input
           type='number'
+          required
           onChange={setData('quantity')}
           placeholder='Quantity of investment'
           className={styles.form__input}
@@ -145,6 +171,7 @@ const Console = () => {
         {/* ----- Invested amount ----- */}
         <input
           type='number'
+          required
           onChange={setData('invested_amount')}
           placeholder='Amount invested'
           className={styles.form__input}
