@@ -26,16 +26,6 @@ const HelpBar = () => {
     keyHandler();
   }, [UserInvestments]);
 
-  //-->  lottie object styles
-  const Lottiestyle = {
-    width: '50%',
-    height: '50%',
-    cursor: 'pointer',
-    position: 'absolute',
-    bottom: '-5%',
-    right: 0,
-  };
-
   //-->  default options for slider component
   const sliderOptions = {
     direction: 'vertical',
@@ -63,14 +53,6 @@ const HelpBar = () => {
         modules={[Autoplay]}
         {...sliderOptions}
       >
-        {/* <lottie-player
-          src='https://assets4.lottiefiles.com/packages/lf20_xh83pj1c.json'
-          background='transparent'
-          speed='.75'
-          style={Lottiestyle}
-          loop
-          autoplay
-        ></lottie-player> */}
         {News.map((data, index) => {
           return (
             <SwiperSlide key={index} className={styles.slide__item}>
@@ -87,7 +69,7 @@ const HelpBar = () => {
                 </p>
                 {/* ----- news title ----- */}
                 <h1>{data.title}</h1>
-                <a href={data.url} target='_blank'>
+                <a href={data.url} target='_blank' rel='noreferrer'>
                   {data.source.name}
                 </a>
               </div>

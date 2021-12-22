@@ -9,6 +9,15 @@ import Console from '../components/center_console/Console';
 
 const Home = () => {
   const User = useSelector((state) => state.user.value);
+  //-->  lottie object styles
+  const Lottiestyle = {
+    width: '10%',
+    height: '20%',
+    cursor: 'pointer',
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -32,6 +41,14 @@ const Home = () => {
           <HelpBar />
 
           {/* ----- report ----- */}
+          <lottie-player
+            src='https://assets4.lottiefiles.com/packages/lf20_xh83pj1c.json'
+            background='transparent'
+            speed='.75'
+            style={Lottiestyle}
+            loop
+            autoplay
+          ></lottie-player>
           <span></span>
         </section>
       </section>
