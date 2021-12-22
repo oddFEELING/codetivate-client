@@ -18,7 +18,7 @@ const HelpBar = () => {
     // code here...
     axios
       .get(
-        `https://newsapi.org/v2/everything?q=${SearchKey}&language=en&pageSize=100&apiKey=793828f7928c41339688cc05efd9ae03`
+        `https://newsapi.org/v2/everything?q=${SearchKey}&language=en&pageSize=100&apiKey=${process.env.NEWS_API}`
       )
       .then((res) => {
         setNews(res.data.articles);
