@@ -1,0 +1,77 @@
+@use '../../styles//theme.module.scss' as *;
+
+.container {
+  @include div(100%, 100%, column, none);
+  align-items: center;
+  position: relative;
+  justify-content: space-between;
+
+  button {
+    width: 8vw;
+    height: 4vh;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 0.3vw;
+    color: clr('lt_2');
+    background-color: clr('pr');
+
+    &:hover {
+      box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.top__section {
+  @include div(90%, 100%, row, none);
+}
+
+.chart__area {
+  @include div(100%, 70%, column, clr('lt'));
+  padding: 3vh 3vw;
+  box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 1vw;
+}
+
+.pie__part {
+  @include div(100%, 35%, column, none);
+  justify-content: space-around;
+}
+
+.pie__chart {
+  @include div(75%, 100%, row, none);
+}
+
+.info__sect {
+  @include div(25%, 100%, column, none);
+  margin-top: 3vh;
+  justify-content: space-between;
+  padding: 2.5vh 3.5vw;
+
+  h2 {
+    font-weight: 400;
+    font-size: clamp(0.5rem, 0.9vw, 4rem);
+  }
+}
+.ticker__area {
+  @include div(20%, 100%, row, none);
+  align-items: center;
+  gap: 2vw;
+
+  h1 {
+    font-size: clamp(1rem, 3.5vw, 23rem);
+  }
+
+  h3 {
+    font-size: clamp(1rem, 1vw, 5rem);
+    font-weight: 500;
+    color: clr('gd');
+  }
+}
+
+.analysis__section {
+  @include div(80%, 100%, row, none);
+  align-items: center;
+  justify-content: center;
+}

@@ -1,12 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import axios from 'axios';
+import { set_inv_amt, set_pos } from '../../features/user';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './card.module.scss';
 
-const Card = (props) => {
+const Card = forwardRef((props, ref) => {
+  const dispatch = useDispatch();
   const [ExpReturn, setExpReturn] = useState(0);
   const [CurrentAmount, setCurrentAmount] = useState(0);
-  const { investment_type, ticker_name, quantity, invested_amount, pos } =
-    props;
+  const {
+    investment_type,
+    ticker_name,
+    quantity,
+    invested_amount,
+    onClick,
+    pos,
+  } = props;
 
   //--> effect to update expected return
   useEffect(() => {
@@ -27,6 +36,8 @@ const Card = (props) => {
           .then((res) => {
             const rawData = res.data['Realtime Currency Exchange Rate'];
             setCurrentAmount(rawData['5. Exchange Rate']);
+            dispatch(set_inv_amt(rawData['5. Exchange Rate']));
+            dispatch(set_pos(pos));
           });
       }
       // get stocks price
@@ -39,6 +50,8 @@ const Card = (props) => {
             const Data = res.data['Time Series (Daily)'];
             const DataArray = Object.entries(Data);
             setCurrentAmount(DataArray[0][1]['4. close']);
+            dispatch(set_inv_amt(DataArray[0][1]['4. close']));
+            dispatch(set_pos(pos));
           });
       }
       // get forex price
@@ -51,6 +64,8 @@ const Card = (props) => {
             const Data = res.data['Time Series FX (Daily)'];
             const DataArray = Object.entries(Data);
             setCurrentAmount(DataArray[0][1]['4. close']);
+            dispatch(set_inv_amt(DataArray[0][1]['4. close']));
+            dispatch(set_pos(pos));
           });
       }
     } catch (err) {
@@ -61,7 +76,7 @@ const Card = (props) => {
     <section className={styles.container}>
       {/* ----- type ----- */}
       <span className={styles.item__section}>
-        <h1>Type</h1>
+        <h1>Type </h1>
         <p>{investment_type}</p>
       </span>
 
@@ -111,12 +126,19 @@ const Card = (props) => {
         </button>
 
         {/* ----- delete investment ----- */}
-        <button className={styles.card__btn} delete='true'>
-          Delete
+        <button
+          className={styles.card__btn}
+          delete='true'
+          onClick={() => {
+            onClick();
+            handlePrice();
+          }}
+        >
+          View
         </button>
       </span>
     </section>
   );
-};
+});
 
 export default Card;

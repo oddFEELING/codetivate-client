@@ -2,13 +2,19 @@ import React, { useEffect, useState, useRef } from 'react';
 import Card from '../inv_card_item/Card';
 import styles from './console.module.scss';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { set_investment } from '../../features/user';
+import { useSelector, useDispatch } from 'react-redux';
+import CardDetail from '../card_detail/CardDetail';
 
 const Console = () => {
+  const dispatch = useDispatch();
+  const [Info, setInfo] = useState(false);
+  const [Position, setPosition] = useState(0);
   const User = useSelector((state) => state.user.value);
   const formRef = useRef();
   const [Add, setAdd] = useState('false');
-  const [UserInvestment, setUserInvestment] = useState([]);
+
+  // initial invetsment data
   const [InvestData, setInvestData] = useState({
     investment_type: '',
     ticker_name: '',
@@ -21,7 +27,7 @@ const Console = () => {
     height: '15%',
     cursor: 'pointer',
     position: 'absolute',
-    right: 0,
+    left: 0,
     bottom: '2%',
     zIndex: 5,
   };
@@ -37,10 +43,10 @@ const Console = () => {
           )
           .then((res) => {
             console.log(res.data.data);
-            setUserInvestment(res.data.data);
+            dispatch(set_investment(res.data.data));
           })
           .catch((err) => {
-            console.log(`Errorgetting data --> ${err}`);
+            console.log(`Error getting data --> ${err}`);
           });
       } catch (err) {
         throw err;
@@ -83,7 +89,7 @@ const Console = () => {
           )
           .then((res) => {
             console.log(res.data.data.investments);
-            setUserInvestment(res.data.data.investments);
+            dispatch(set_investment(res.data.data.investments));
           })
           .catch((err) => {
             console.log(`Error adding data ---> ${err}`);
@@ -110,78 +116,94 @@ const Console = () => {
   };
   return (
     <section className={styles.container}>
-      <lottie-player
-        src='https://assets3.lottiefiles.com/packages/lf20_f6zszxrn.json'
-        background='transparent'
-        speed='.7'
-        onClick={showForm}
-        style={LottieStyle}
-        loop
-        hover
-      ></lottie-player>
+      {!Info ? (
+        <>
+          <lottie-player
+            src='https://assets3.lottiefiles.com/packages/lf20_f6zszxrn.json'
+            background='transparent'
+            speed='.7'
+            onClick={showForm}
+            style={LottieStyle}
+            loop
+            hover
+          ></lottie-player>
 
-      <button>Update List</button>
-      {UserInvestment.length > 0 ? (
-        UserInvestment.map((data, index) => {
-          return (
-            <Card
-              key={index}
-              pos={index}
-              quantity={data.quantity}
-              investment_type={data.investment_type}
-              ticker_name={data.ticker_name}
-              invested_amount={data.invested_amount}
+          <button>Update List</button>
+          {User.investments.length > 0 ? (
+            User.investments.map((data, index) => {
+              return (
+                <Card
+                  key={index}
+                  onClick={() => {
+                    setInfo(true);
+                    setPosition(index);
+                  }}
+                  pos={index}
+                  quantity={data.quantity}
+                  investment_type={data.investment_type}
+                  ticker_name={data.ticker_name}
+                  invested_amount={data.invested_amount}
+                />
+              );
+            })
+          ) : (
+            <h1>No Data</h1>
+          )}
+          {/* ----- Add invetment card ----- */}
+          <form className={styles.add__form} ref={formRef} add={Add}>
+            <p onClick={() => setAdd('false')}>X Close</p>
+            <h1>Add new Investment</h1>
+            {/* ----- investment type ----- */}
+            <input
+              type='text'
+              required
+              onChange={setData('investment_type')}
+              placeholder='Investment type'
+              className={styles.form__input}
             />
-          );
-        })
+
+            {/* ----- ticker name ----- */}
+            <input
+              type='text'
+              required
+              placeholder='Ticker name'
+              onChange={setData('ticker_name')}
+              className={styles.form__input}
+            />
+
+            {/* ----- Quantity ----- */}
+            <input
+              type='number'
+              required
+              onChange={setData('quantity')}
+              placeholder='Quantity of investment'
+              className={styles.form__input}
+            />
+
+            {/* ----- Invested amount ----- */}
+            <input
+              type='number'
+              required
+              onChange={setData('invested_amount')}
+              placeholder='Amount invested'
+              className={styles.form__input}
+            />
+
+            {/* ----- add button ----- */}
+            <button className={styles.form__btn} onClick={handleInvestment}>
+              Add investment
+            </button>
+          </form>
+        </>
       ) : (
-        <h1>No Data</h1>
+        <>
+          <CardDetail
+            onClick={() => setInfo(false)}
+            tckr_name={User.investments[Position].ticker_name}
+            inv_type={User.investments[Position].investment_type}
+          />
+        </>
       )}
-      {/* ----- Add invetment card ----- */}
-      <form className={styles.add__form} ref={formRef} add={Add}>
-        <p onClick={() => setAdd('false')}>X Close</p>
-        <h1>Add new Investment</h1>
-        {/* ----- investment type ----- */}
-        <input
-          type='text'
-          required
-          onChange={setData('investment_type')}
-          placeholder='Investment type'
-          className={styles.form__input}
-        />
-
-        {/* ----- ticker name ----- */}
-        <input
-          type='text'
-          required
-          placeholder='Ticker name'
-          onChange={setData('ticker_name')}
-          className={styles.form__input}
-        />
-
-        {/* ----- Quantity ----- */}
-        <input
-          type='number'
-          required
-          onChange={setData('quantity')}
-          placeholder='Quantity of investment'
-          className={styles.form__input}
-        />
-
-        {/* ----- Invested amount ----- */}
-        <input
-          type='number'
-          required
-          onChange={setData('invested_amount')}
-          placeholder='Amount invested'
-          className={styles.form__input}
-        />
-
-        {/* ----- add button ----- */}
-        <button className={styles.form__btn} onClick={handleInvestment}>
-          Add investment
-        </button>
-      </form>
     </section>
   );
 };

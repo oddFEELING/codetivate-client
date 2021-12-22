@@ -1,7 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Link from 'next/link';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import styles from './helpbar.module.scss';
+import { Autoplay } from 'swiper';
+import { useSelector } from 'react-redux';
 
 const HelpBar = () => {
+  const UserInvestments = useSelector((state) => state.user.value.investments);
+  //-->  search value state
+  const [SearchKey, setSearchKey] = useState('finance');
+  //-->  news Object state
+  const [News, setNews] = useState([]);
+
+  //-->  effect to fetch news
+  useEffect(() => {
+    // code here...
+    axios
+      .get(
+        `https://newsapi.org/v2/everything?q=${SearchKey}&language=en&pageSize=100&apiKey=793828f7928c41339688cc05efd9ae03`
+      )
+      .then((res) => {
+        setNews(res.data.articles);
+      });
+    keyHandler();
+  }, [UserInvestments]);
+
+  //-->  lottie object styles
   const Lottiestyle = {
     width: '50%',
     height: '50%',
@@ -10,17 +35,66 @@ const HelpBar = () => {
     bottom: '-5%',
     right: 0,
   };
+
+  //-->  default options for slider component
+  const sliderOptions = {
+    direction: 'vertical',
+    autoplay: true,
+    parallax: true,
+    loop: true,
+    speed: 1500,
+  };
+
+  //-->  function to set search key
+
+  function keyHandler() {
+    if (UserInvestments.length > 0) {
+      setInterval(() => {
+        const random = Math.floor(Math.random() * UserInvestments.length);
+        setSearchKey(UserInvestments[random].ticker_name);
+      }, 20000);
+    }
+  }
+
   return (
     <section className={styles.container}>
-      <h1>Help bar</h1>
-      <lottie-player
-        src='https://assets4.lottiefiles.com/packages/lf20_xh83pj1c.json'
-        background='transparent'
-        speed='.75'
-        style={Lottiestyle}
-        loop
-        autoplay
-      ></lottie-player>
+      <Swiper
+        className={styles.news__card}
+        modules={[Autoplay]}
+        {...sliderOptions}
+      >
+        {/* <lottie-player
+          src='https://assets4.lottiefiles.com/packages/lf20_xh83pj1c.json'
+          background='transparent'
+          speed='.75'
+          style={Lottiestyle}
+          loop
+          autoplay
+        ></lottie-player> */}
+        {News.map((data, index) => {
+          return (
+            <SwiperSlide key={index} className={styles.slide__item}>
+              <div
+                id={styles.main__card}
+                className={styles.main__card}
+                style={{
+                  background: `linear-gradient(to bottom, rgba(0,0,0,0.1),rgba(0,0,0,0.2),rgba(0,0,0,0.8), rgba(0,0,0,0.95)), url(${data.urlToImage})  no-repeat`,
+                }}
+              >
+                {/* ----- Seacrch key ----- */}
+                <p>
+                  search key: <b>{SearchKey}</b>
+                </p>
+                {/* ----- news title ----- */}
+                <h1>{data.title}</h1>
+                <a href={data.url} target='_blank'>
+                  {data.source.name}
+                </a>
+              </div>
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
     </section>
   );
 };
