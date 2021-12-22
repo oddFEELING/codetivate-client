@@ -1,9 +1,38 @@
 @use '../../styles/theme.module.scss' as *;
 
 .container {
-  @include div(60%, 100%, column, clr('sc'));
+  @include div(60vh, 100%, column, clr('sc'));
   position: relative;
   align-items: center;
-  padding: 5% 5%;
+  gap: 2vh;
   box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.35);
+}
+
+.news__card {
+  @include div(100%, 100%, column, clr('pr'));
+  overflow: hidden;
+}
+
+// className={styles.news__card}
+
+.slide__item {
+  @include div(100%, 100%, column, none);
+}
+
+.main__card#main__card {
+  @include div(100%, 100%, column, none);
+  color: clr('lt');
+  align-items: flex-start;
+  justify-content: flex-end;
+  background-repeat: no-repeat;
+  padding: 4vh 2vw;
+  gap: 2vh;
+
+  h1 {
+    font-size: clamp(1rem, 1.3vw, 4rem);
+  }
+
+  a {
+    font-family: $font_2;
+  }
 }
