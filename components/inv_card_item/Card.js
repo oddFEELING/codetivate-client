@@ -1,10 +1,10 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { set_inv_amt, set_pos } from '../../features/user';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styles from './card.module.scss';
 
-const Card = forwardRef((props, ref) => {
+const Card = (props) => {
   const dispatch = useDispatch();
   const [ExpReturn, setExpReturn] = useState(0);
   const [CurrentAmount, setCurrentAmount] = useState(0);
@@ -139,6 +139,6 @@ const Card = forwardRef((props, ref) => {
       </span>
     </section>
   );
-});
+};
 
 export default Card;
